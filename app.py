@@ -113,6 +113,15 @@ def delete_data():
     inserisci_dati(sql, (id,))
     return redirect(url_for('book'))
 
+@app.route('/delete_data2/<id>')
+def delete_data2(id):
+    # Ottenere i dati dal form
+    sql = "DELETE FROM book WHERE id = %s"
+    inserisci_dati(sql, (id,))
+    print('eliminato id: ', id)
+    return redirect(url_for('book'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
