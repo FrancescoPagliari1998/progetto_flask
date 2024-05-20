@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aggiungi Libro</title>
+</head>
+<body>
+    <h2>Aggiungi un nuovo libro</h2>
+    <form action="/submit_book" method="POST">
+        <label for="title">Titolo:</label><br>
+        <input type="text" id="title" name="title" required><br>
+        <label for="author">Autore:</label><br>
+        <input type="text" id="author" name="author" required><br>
+        <label for="genre">Genere:</label><br>
+        <input type="text" id="genre" name="genre" required><br>
+        <label for="publisher">Editore:</label><br>
+        <input type="text" id="publisher" name="publisher" required><br>
+        <label for="year">Anno di pubblicazione:</label><br>
+        <input type="number" id="year" name="year" required><br><br>
+        <input type="submit" value="Aggiungi">
+    </form>
+</body>
+</html>

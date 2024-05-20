@@ -56,6 +56,7 @@ def api_book_search(publisher):
 def api_book_search2():
     publisher = request.args.get('publisher')
     genre = request.args.get('genre')
+    id = request.args.get('id')
 
     sql = "SELECT * FROM book WHERE 1=1"
     params = []
@@ -65,8 +66,16 @@ def api_book_search2():
     if genre:
         sql += ' AND genre = %s'
         params.append(genre)
+    if id:
+        sql += ' AND id = %s'
+        params.append(id)
     books = execute_query(sql, params=tuple(params))
     return books
+
+@app.route('/add_book', methods=['GET'])
+def add_book():
+    return render_template('add_book.html')
+
 
 
 if __name__ == '__main__':
