@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import csv
 import mysql.connector
 
@@ -47,6 +47,26 @@ def api_book():
     books = execute_query('SELECT * FROM book')
     return books
 
+@app.route('/api/book/<publisher>') #Questo parametro messo tra le <> è un Query Params.
+def api_book_search(publisher):
+    books = execute_query('SELECT * FROM book WHERE publisher = %s', (publisher,))
+    return books
+
+@app.route('/api/book2') #Query String
+def api_book_search2():
+    publisher = request.args.get('publisher')
+    genre = request.args.get('genre')
+
+    sql = "SELECT * FROM book WHERE 1=1"
+    params = []
+    if publisher:
+        sql += " AND publisher = %s"
+        params.append(publisher)
+    if genre:
+        sql += ' AND genre = %s'
+        params.append(genre)
+    books = execute_query(sql, params=tuple(params))
+    return books
 
 
 if __name__ == '__main__':
