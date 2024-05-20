@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import csv
 import mysql.connector
 
@@ -26,6 +26,19 @@ def execute_query(query, params=None):
     cursor.close()
     connection.close()
     return result
+
+
+def inserisci_dati(query, params=None):
+    connection = create_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    if params:
+        cursor.execute(query, params)
+    else:
+        cursor.execute(query)
+    connection.commit()
+    cursor.close()
+    connection.close()
+
 
 
 @app.route('/')
@@ -76,6 +89,17 @@ def api_book_search2():
 def add_book():
     return render_template('add_book.html')
 
+@app.route('/submit_book', methods=['POST'])
+def submit_book():
+    # Ottenere i dati dal form
+    title = request.form['title']
+    author = request.form['author']
+    genre = request.form['genre']
+    publisher = request.form['publisher']
+    year = request.form['year']
+    sql = "INSERT INTO book (title, author, genre, publisher, year) VALUES (%s, %s, %s, %s, %s)"
+    inserisci_dati(sql, (title, author, genre, publisher, year))
+    return redirect(url_for('book'))
 
 
 if __name__ == '__main__':
