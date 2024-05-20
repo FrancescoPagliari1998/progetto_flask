@@ -4,9 +4,16 @@ import csv
 app = Flask(__name__)
 
 
+
 @app.route('/')
 def home():
-    return render_template('home.html')
+    bottoni = {
+        'b1': 'film',
+        'b2': 'music',
+        'b3': 'book',
+    }
+    return render_template('home.html', titolo='MediApp'.upper(), bottoni=bottoni)
+
 
 
 
