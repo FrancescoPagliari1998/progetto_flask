@@ -101,6 +101,18 @@ def submit_book():
     inserisci_dati(sql, (title, author, genre, publisher, year))
     return redirect(url_for('book'))
 
+@app.route('/delete_book', methods=['GET'])
+def delete_book():
+    return render_template('delete_book.html')
+
+@app.route('/delete_data', methods=['POST'])
+def delete_data():
+    # Ottenere i dati dal form
+    id = request.form['id_']
+    sql = "DELETE FROM book WHERE id = %s"
+    inserisci_dati(sql, (id,))
+    return redirect(url_for('book'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
